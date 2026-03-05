@@ -7,25 +7,23 @@ namespace Nechaev_CSharp // Пространство имён
     {
         static void Main(string[] args)
         {
-			uint[,] array2D =
-			{
-				{5, 6, 7, 8, 9 },
-				{70, 2, 3, 4, 5 },
-				{1, 80, 3, 4, 5 },
-				{1, 40, 3, 4, 5 },
-				{1, 2, 25, 4, 5 },
-			};
-			uint maxValue = 0;
+            string nameLeft = "Лево";
+            string nameRight = new String(new char[] { 'П', 'р', 'а', 'в', 'о' });
+            string nameAAAAAA = new String('A', 6);
+			string nameRightExtended = new String(new char[] { 'П', 'р', 'а', 'в', 'о' }, 1, 3); // рав
+            string greka2D =
+                """
+                Ехал Грека через реку
+                Видит Ррека - в реке рак
+                Сунул Грека руку в реку
+                Рак за руку Греку цап
+                """;
 
-			for (uint i = 0; i < array2D.GetLength(0); i++)
-			{
-				for (uint j = 0; j < array2D.GetLength(1); j++)
-				{
-					if (maxValue < array2D[i, j]) maxValue = array2D[i, j];
-				}
-                Console.WriteLine($"Максимальное значение в {i}-й строке - {maxValue}");
-				maxValue = 0;
-			}
+            string name = "Андрей";
+            string lublu = "C++";
+            Console.WriteLine("Моё имя: {0}. Я люблю: {1}", name, lublu);
+
+
 		}
     }
 }
