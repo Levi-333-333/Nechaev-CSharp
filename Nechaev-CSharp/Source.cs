@@ -7,33 +7,25 @@ namespace Nechaev_CSharp // Пространство имён
     {
         static void Main(string[] args)
         {
-            int[,] array2D = new int[5, 5];
-            uint[,] intArray2D =
-            {
-                {1, 2, 3, 4, 5 },
-                {1, 2, 3, 4, 5 },
-                {1, 2, 3, 4, 5 },
-                {1, 2, 3, 4, 5 },
-                {1, 2, 3, 4, 5 }
-            };
+			uint[,] array2D =
+			{
+				{5, 6, 7, 8, 9 },
+				{70, 2, 3, 4, 5 },
+				{1, 80, 3, 4, 5 },
+				{1, 40, 3, 4, 5 },
+				{1, 2, 25, 4, 5 },
+			};
+			uint maxValue = 0;
 
-            for (int i = 0; i < array2D.GetLength(0); i++)
-            {
-                for (int j = 0; j < array2D.GetLength(1); j++)
-                {
-                    array2D[i, j] = j;
-                    Console.WriteLine($"({i}, {j})");
-                }
-            }
-
-            for (int i = 0; i < intArray2D.GetLength(0); i++)
-            {
-                for (int j = 0; j< intArray2D.GetLength(1); j++)
-                {
-                    Console.Write($"{intArray2D[i, j]} ");
-                }
-                Console.WriteLine();
-            }
-        }
+			for (uint i = 0; i < array2D.GetLength(0); i++)
+			{
+				for (uint j = 0; j < array2D.GetLength(1); j++)
+				{
+					if (maxValue < array2D[i, j]) maxValue = array2D[i, j];
+				}
+                Console.WriteLine($"Максимальное значение в {i}-й строке - {maxValue}");
+				maxValue = 0;
+			}
+		}
     }
 }
