@@ -7,39 +7,23 @@ namespace Nechaev_CSharp // Пространство имён
     {
         static void Main(string[] args)
         {
-            string userName = "Default";
-            string userPassword = "Default";
-            int errorCounts = 0;
-
-            int userChoice = 0;
-            do
+            byte[] bytes = new byte[10];
+            for (int i = 0; i < bytes.Length; i++)
             {
-                Console.WriteLine("Вы входите в систему. Для продолжения введите 1. Для выхода введите 0");
-				userChoice = Convert.ToInt32(Console.ReadLine());
-                if (userChoice == 0) break;
-
-                Console.WriteLine("Введите имя: ");
-                string name = Console.ReadLine();
-
-                Console.WriteLine("Введите пароль: ");
-                string password = Console.ReadLine();
-
-                if (name == userName && password == userPassword)
+                byte temp = Convert.ToByte(i * 2);
+                if (temp == 8)
                 {
-                    Console.WriteLine("Вы вошли в систему. Вы лопух");
+                    Console.WriteLine("Это говно (8) я вписывать не буду");
+                    continue;
+                }
+				bytes[i] = temp;
+                if (bytes[i] == 16)
+                {
+                    Console.WriteLine("Обнаружено 16. Я обиделся");
                     break;
                 }
-                else
-                {
-                    errorCounts++;
-                    if (errorCounts == 3)
-                    {
-                        Console.WriteLine("Ты олух");
-                        break;
-                    }
-                    Console.WriteLine($"Неверный логин или пароль. У вас осталось {3 - errorCounts}");
-                }
-            } while (userChoice != 0);
+                Console.WriteLine($"{i}-й элемент = {bytes[i]}");
+            }
         }
     }
 }
