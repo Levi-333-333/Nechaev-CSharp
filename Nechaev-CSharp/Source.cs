@@ -7,22 +7,32 @@ namespace Nechaev_CSharp // Пространство имён
     {
         static void Main(string[] args)
         {
-            byte[] bytes = new byte[10];
-            for (int i = 0; i < bytes.Length; i++)
+            int[,] array2D = new int[5, 5];
+            uint[,] intArray2D =
             {
-                byte temp = Convert.ToByte(i * 2);
-                if (temp == 8)
+                {1, 2, 3, 4, 5 },
+                {1, 2, 3, 4, 5 },
+                {1, 2, 3, 4, 5 },
+                {1, 2, 3, 4, 5 },
+                {1, 2, 3, 4, 5 }
+            };
+
+            for (int i = 0; i < array2D.GetLength(0); i++)
+            {
+                for (int j = 0; j < array2D.GetLength(1); j++)
                 {
-                    Console.WriteLine("Это говно (8) я вписывать не буду");
-                    continue;
+                    array2D[i, j] = j;
+                    Console.WriteLine($"({i}, {j})");
                 }
-				bytes[i] = temp;
-                if (bytes[i] == 16)
+            }
+
+            for (int i = 0; i < intArray2D.GetLength(0); i++)
+            {
+                for (int j = 0; j< intArray2D.GetLength(1); j++)
                 {
-                    Console.WriteLine("Обнаружено 16. Я обиделся");
-                    break;
+                    Console.Write($"{intArray2D[i, j]} ");
                 }
-                Console.WriteLine($"{i}-й элемент = {bytes[i]}");
+                Console.WriteLine();
             }
         }
     }
