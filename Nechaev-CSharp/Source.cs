@@ -28,26 +28,42 @@ namespace Nechaev_CSharp // Пространство имён
             }
             set
             {
-                Console.WriteLine("Введите старый пин-код");
+                Console.WriteLine("Введите пин-код");
                 int tempPinCode = int.Parse(Console.ReadLine());
-                if (tempPinCode == pinCode) contents = value;
+                if (tempPinCode == pinCode) contents += ", " + value;
                 else Console.WriteLine("Отказано в доступе. Неверный пин-код.");
             }
         }
-        Safe (int pinCode)
+        public Safe (int pinCode)
         {
             this.pinCode = pinCode;
         }
         public void ChangePinCode(int NewpinCode)
         {
-            // Доделать
+            Console.WriteLine("Введите старый пин-код");
+            int tempPinCode = int.Parse(Console.ReadLine());
+            if (tempPinCode == this.pinCode) this.pinCode = NewpinCode;
+            else Console.WriteLine("Отказано в доступе. Неверный пин-код.");
         }
     }
     class Source
     {
         static void Main(string[] args)
         {
-            
+            Safe safe = new Safe(1488);
+
+            Console.WriteLine("Добавление предмета");
+            safe.Contents = "Крутые очки";
+            Console.WriteLine("Просмотр предметов");
+            Console.WriteLine(safe.Contents);
+            Console.WriteLine("Изменение пароль");
+            safe.ChangePinCode(1337);
+            Console.WriteLine("Просмотр предметов");
+            Console.WriteLine(safe.Contents);
+            Console.WriteLine("Добавление предмета");
+            safe.Contents = "Супер крутые очки";
+            Console.WriteLine("Просмотр предметов");
+            Console.WriteLine(safe.Contents);
         }
     }
 }
