@@ -5,10 +5,24 @@ using System.Security.AccessControl; // Коллекции, на подобие 
 
 namespace Nechaev_CSharp // Пространство имён
 {
+    class SadException : Exception
+    {
+        private int[] array;
+        public SadException(int[] array)
+        {
+            this.array = array;
+        }
+        public override string Message
+        {
+            get { return $"Массив не инициализирован!"; }
+        }
+    }
+
     class Source
     {
         static int Divide(int[]? array, int i, int j)
         {
+            if (array == null) throw new SadException(array);
             return array[i] / array[j];
         }
 
@@ -30,13 +44,25 @@ namespace Nechaev_CSharp // Пространство имён
                 {
                     Console.WriteLine(zeroExeption.Message);
                 }
-                catch (NullReferenceException nullExeption)
-                {
-                    Console.WriteLine(nullExeption.Message);
-                }
+                //catch (NullReferenceException nullExeption)
+                //{
+                //    Console.WriteLine(nullExeption.Message);
+                //}
                 catch (IndexOutOfRangeException indexExeption)
                 {
                     Console.WriteLine(indexExeption.Message);
+                }
+                catch (SadException divideException)
+                {
+                    Console.WriteLine(divideException.Message);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                finally
+                {
+                    Console.WriteLine("Не смотря на все исключение деление отработало\n");
                 }
             }
         }
