@@ -6,102 +6,80 @@ using System.Threading.Channels; // Коллекции, на подобие List
 
 namespace Nechaev_CSharp // Пространство имён
 {
-    class Instrument
+    class LowEnergyException : Exception
     {
-        private string model;
-        private float coast;
-        private bool isTune;
-        public string Model
+
+    }
+    class Rover
+    {
+        public Rover(int x, int y, int z)
         {
-            get { return model; }
-            set { model = value; }
-        }
-        public float Coast
-        {
-            get { return coast; }
-            set { coast = value; }
-        }
-        public bool IsTune
-        {
-            get { return isTune; }
-            set { isTune = value; }
-        }
-        public Instrument(string model, float coast, bool isTune)
-        {
-            this.model = model;
-            this.coast = coast;
-            this.isTune = isTune;
+            coordinates = new int[] { x, y, z };
+            scanned = new int[] { };
+            energy = 5;
         }
 
-        public void Play() => Console.WriteLine("Инструмент звучит");
-        public void Tune()
+        public int[] Coordinates
         {
-            isTune = true;
-            Console.WriteLine("Инструмент настроен");
+            get { return coordinates; } 
         }
-    }
-    class Gutar : Instrument
-    {
-        private uint stringCount;
-        private bool isElectronic;
-        public uint StringCount
+        public int[] Scanned
         {
-            get { return stringCount; }
-            set { stringCount = value; }
+            get { return scanned; }
         }
-        public bool IsElectronic
+        public int Energy
         {
-            get { return isElectronic; }
-            set { isElectronic = value; }
+            get { return energy; }
+            set { energy = value; }
         }
-        public Gutar(uint stringCount, bool isElectronic, string model, float coast, bool isTune) : base(model, coast, isTune)
-        {
-            this.stringCount = stringCount;
-            this.isElectronic = isElectronic;
-        }
-        public void PerformOnTheStreet()
-        {
-            if (IsTune) Console.WriteLine("Вы брынчите на улице. В будущем вы строчаетесь");
-            else Console.WriteLine("Вы позоритесь на всю улицу. В будущем вы строчаетесь");
-        }
-    }
-    class Piano : Instrument
-    {
-        private uint fretsCount;
-        private bool isElectronic;
-        public uint FretsCount
-        {
-            get { return fretsCount; }
-            set { fretsCount = value; }
-        }
-        public bool IsElectronic
-        {
-            get { return isElectronic; }
-            set { isElectronic = value; }
-        }
-        public Piano(uint fretsCount, bool isElectronic, string model, float coast, bool isTune) : base(model, coast, isTune)
-        {
-            this.fretsCount = fretsCount;
-            this.isElectronic = isElectronic;
-        }
-        public void PerformInARestaurant()
-        {
-            if (IsTune) Console.WriteLine("Вы в красивом костюме выступаете в элитном ресторане");
-            else Console.WriteLine("Вы позоритель на глазах у элиты");
-        }
-    }
 
+        public void Move(string name, int x, int y, int z)
+        {
+            if (energy != 0)
+            {
+                this.name = name;
+                coordinates[0] = x; 
+                coordinates[1] = y; 
+                coordinates[2] = z;
+                energy--;
+            }
+            else Console.WriteLine("Недостаточно заряда!!!");
+
+        }
+        public void Scan()
+        {
+            if (energy - 2 > 0)
+            {
+                scanned[scanned.Length] = rnd.Next();
+                energy -= 2;
+            }
+            else Console.WriteLine("Недостаточно энергии!!!");
+        }
+        public void ReplenishEnergy()
+        {
+            energy = 5;
+        }
+        public void PrintInfo()
+        {
+            Console.WriteLine($"Ровер {name}. Заряд: {energy}/5.\nМестонахождение (x,y,z): ({coordinates[0]},{coordinates[1]},{coordinates[2]})\n\nНапишите 'Help' для вывода списка команд");
+        }
+        public void Help()
+        {
+            Console.WriteLine("Доступные команды:\nMove - перемещает ровера на заданные позже координаты. Тратит одну энергию.\nScan - Сканирует объект и добавляет его в свою базу данных. Тратит 2 энергии.\nReplenishEnergy - Восполняет энергию до максимума.\nHelp - выводит список команд.\nExit - Завершить программу.\n");
+        }
+
+        private string name;
+        private int[] coordinates;
+        private int[] scanned;
+        private int energy; // 5 max
+
+        Random rnd = new Random();
+    }
     class Source
     {
         static void Main(string[] args)
         {
-            Gutar gutar = new Gutar(6, false, "Jet", 15000, false);
-            gutar.PerformOnTheStreet();
-            gutar.Tune();
-            gutar.PerformOnTheStreet();
-            Instrument newGutar = gutar;
-            newGutar.Coast = 3000;
-            if (newGutar is Gutar) Console.WriteLine("Вы сторчались.");
+            
         }
     }
 }
