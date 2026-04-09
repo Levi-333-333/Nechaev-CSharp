@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 
-// Абстрактный класс животного, определяющий функционал только для классов одной природы, то есть животных!
 abstract class OutputDevice
 {
     public abstract void Move();
     public abstract void ShowData();
     public abstract void TurnOff();
+    public abstract string Model { get; set; }
 }
 
-// Интерфейс, определяющий функционал для движимых объектов.
-// ОНИ МОГУТ БЫТЬ РАЗНОЙ ПРИРОДЫ!
 public interface IInputDevice
 {
     public void Move();
@@ -48,6 +46,37 @@ class Monitor : OutputDevice
     {
         Console.WriteLine("Монитор выключен.");
     }
+
+    public override string Model
+    {
+        get { return model; }
+        set { model = value; }
+    }
+
+    private string model;
+}
+class Printer : OutputDevice
+{
+    public override void Move()
+    {
+        Console.WriteLine("Принтер подвигали.");
+    }
+    public override void ShowData()
+    {
+        Console.WriteLine("Принтер печатает.");
+    }
+    public override void TurnOff()
+    {
+        Console.WriteLine("Принтер выключен.");
+    }
+
+    public override string Model
+    {
+        get { return model; }
+        set { model = value; }
+    }
+
+    private string model;
 }
 
 class Source
@@ -55,24 +84,19 @@ class Source
     static void Main(string[] args)
     {
         Monitor monitor = new Monitor();
-        monitor.Move();
-        monitor.ShowData();
-        monitor.TurnOff();
+        monitor.Model = "ViewSonic";
 
-        ComputerMouse computerMouse = new ComputerMouse();
-        computerMouse.Move();
-        computerMouse.EnterData();
-        computerMouse.TurnOff();
+        Printer printer = new Printer();
+        printer.Model = "HP";
+
+        OutputDevice[] devices = new OutputDevice[] { monitor, printer };
+
+        Console.Write("Каким девайсом вы хотите воспользоваться? (ViewSonic/HP)");
+        string userInput = Console.ReadLine();
+
+        for (int i = 0; i < devices.Length; i++)
+        {
+            if (devices[i].Model == userInput) devices[i].ShowData();
+        }
     }
 }
-
-
-//      Абстрактные класс и интерфейсы
-// Абстрактный класс - это такой, который не реализует функционал и позволяет наследуемым классам его задать или преопределить
-// Более продвинутым способом определить некий шаблон является создание интерфейса.
-// Главным смысловым отличием абстрактного класса от интерфейса является то, что первый используется для описания классов сущностей одной природы, а интерфейсы - однотипных, определяющих действия по отношению к сущностям.
-
-//      Практика
-// 1. С использованием имеющихся знаний попытаться применить реализованную функцию интерфейса IMovable в наследуемом классе ComputerMouse и вызвать ее в Main()
-// 2. Создать абстрактный класс, который бы по сущности подходил к компьютерной периферии и объявлял 3 метода. Далее необходимо создать новый класс компьютерной периферии который наследуется от нового абстрактного класса. Продемонстрировать функционал в Main()
-// 3. Создать интерфейс, который бы по сущности подходил к компьютерной периферии и объявлял 3 метода. Далее необходимо создать новый класс компьютерной периферии который наследуется от нового интферйеса. Продемонстрировать функционал в Main()
