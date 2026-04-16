@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Diagnostics;
-
-struct Pen 
-{
-    string corpusMaterial, writingMaterial;
-    public Pen(string corpusMaterial, string writingMaterial) 
-    {
-        this.corpusMaterial = corpusMaterial;
-        this.writingMaterial = writingMaterial;
-    }
-    public void Draw() => Console.WriteLine($"Ручка из {corpusMaterial} материалом {writingMaterial} нарисовала пенис");
-}
+using Departament_namespace;
+using Worker_namespace;
 
 class Source
 {
     static void Main(string[] args)
     {
-        Pen p = new Pen("пластик", "чернила");
-        p.Draw();
+        Departament it = new Departament("IT");
+        Departament marketing = new Departament("Marketing");
+
+        Worker kira = new Worker("Kirill", 6000, 6);
+
+        it.AddWorker(new Worker("Petya", 6000, 6));
+        it.AddWorker(kira);
+        it.AddWorker(new Worker("Vasily", 6000, 6));
+
+        marketing.AddWorker(new Worker("Anastasiya", 3002, 2));
+        marketing.AddWorker(new Worker("Ivan", 3002, 2));
+        marketing.AddWorker(new Worker("Vasilisa", 3002, 2));
+
+        it.PrintWorkers();
+        marketing.PrintWorkers();
+
+        it.FireWorker(kira);
+        Console.WriteLine();
+        it.PrintWorkers();
     }
 }
