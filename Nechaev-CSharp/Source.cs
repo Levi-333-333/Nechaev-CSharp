@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Numerics;
 
-struct Point {
-    float x, y;
-    public Point(float x, float y) {
-        this.x = x;
-        this.y = y;
+struct Pen 
+{
+    string corpusMaterial, writingMaterial;
+    public Pen(string corpusMaterial, string writingMaterial) 
+    {
+        this.corpusMaterial = corpusMaterial;
+        this.writingMaterial = writingMaterial;
     }
-    public void Draw() => Console.WriteLine($"Всем привет я точка ({x}:{y})");
+    public void Draw() => Console.WriteLine($"Ручка из {corpusMaterial} материалом {writingMaterial} нарисовала пенис");
 }
 
 class Source
 {
     static void Main(string[] args)
     {
-        Point p = new Point(3, 6);
+        Pen p = new Pen("пластик", "чернила");
         p.Draw();
     }
 }
