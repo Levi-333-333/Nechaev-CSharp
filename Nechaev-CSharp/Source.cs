@@ -1,53 +1,41 @@
 ﻿using System;
 using System.Diagnostics;
-
-// Интерфейс, определяющий функционал для движимых объектов.
-// ОНИ МОГУТ БЫТЬ РАЗНОЙ ПРИРОДЫ!
-public interface IAnimal
+ 
+enum OrderStatus
 {
-    public void Move();
-    public void CollisionDetect() // пример-функция столкновения
-    {
-        Console.WriteLine("Объект столкнулся с другим объектом.");
-    }
-    public string Name { get; }
-    public void PrintName() => Console.WriteLine($"Животное кличас {Name}");
+    OrderCreated = 1,
+    OrderPaid,
+    OrderSent,
+    OrderDelevered,
+    OrderCanseled
 }
 
-class Racoon : IAnimal
+class Order
 {
-    private string name;
-    public Racoon(string name) => this.name = name;
-    public string Name { get { return name; } }
-    public void Move() => Console.WriteLine("Енот движется");
-    public void Pet() => Console.WriteLine($"Вы гладите {name}");
+    private uint id;
+    private OrderStatus status;
+    public Order(uint id) 
+    { 
+        this.id = id; 
+        status = OrderStatus.OrderCreated;
+    }
+    public void ChangeStatus(OrderStatus newStatus) => status = newStatus;
+    public void PrintInfo() => Console.WriteLine($"Номер заказа {id}: статус заказа {status.ToString()}"); // Да, в задании было через свитч, и вообще это делать в функции ChangeStatus, но я захотел поэксперементировать. Я редиска
 }
 
 class Source
 {
+    string whoIsMe = "я редиска";
     static void Main(string[] args)
     {
-        IAnimal[] zoo = new IAnimal[] { new Racoon("Бандит"), new Racoon("Ракета"), new Racoon("Болт") };
+        Order order = new Order(1);
 
-        bool isSucsess = false;
-        Console.Write("Введите имя енота, которого хотите погладить: ");
-        string userInput = Console.ReadLine();
-        foreach (Racoon racoon in zoo)
-        {
-            if (racoon.Name == userInput)
-            {
-                racoon.Pet();
-                isSucsess = true;
-                break;
-            }
-        }
-        if (!isSucsess) Console.WriteLine("Нет такого енота в зоопарке");
+        order.PrintInfo();
+        order.ChangeStatus(OrderStatus.OrderPaid);
+        order.PrintInfo();
+        order.ChangeStatus(OrderStatus.OrderSent);
+        order.PrintInfo();
+        order.ChangeStatus(OrderStatus.OrderDelevered);
+        order.PrintInfo();
     }
 }
-
-//      Практика
-// 1. Дополнить программу новым интерфейсом функционала клички. В интерфейсе должны быть поле имени с определенными get и set свойствами и функция, которая бы в консоль выводила кличку животного в консоли.
-// 2. В Main создать массив зоопарка, который должен хранить в себе объекты интерфейсов.
-// 3. Дополнить классы животных функцией Pet(), которая выводит в консоль о том, что пользователь гладит животное + имя
-// 4. Просить пользователя ввести имя животного, которое он хочет погладить.
-// 5. В цикле перебирать каждое животное и сравнивать его имя со вводом пользователя. Если есть совпадение, то вызывать функцию Pet() от перечисляемого объекта.
