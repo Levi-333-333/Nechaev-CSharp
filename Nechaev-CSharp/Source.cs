@@ -20,8 +20,32 @@ class Order
         status = OrderStatus.OrderCreated;
     }
     public void ChangeStatus(OrderStatus newStatus) => status = newStatus;
-    public void PrintInfo() => Console.WriteLine($"Номер заказа {id}: статус заказа {status.ToString()}"); // Да, в задании было через свитч, и вообще это делать в функции ChangeStatus, но я захотел поэксперементировать. Я редиска
-}
+    public void PrintInfo()
+    {
+        string currentOrderStatus;
+        switch (status)
+        {
+            case OrderStatus.OrderCreated:
+                currentOrderStatus = "Заказ создан";
+                break;
+            case OrderStatus.OrderPaid:
+                currentOrderStatus = "Заказ оплачен";
+                break;
+            case OrderStatus.OrderSent:
+                currentOrderStatus = "Заказ отправлен";
+                break;
+            case OrderStatus.OrderDelevered:
+                currentOrderStatus = "Заказ доставлен";
+                break;
+            case OrderStatus.OrderCanseled:
+                currentOrderStatus = "Заказ отменён";
+                break;
+            default:
+                currentOrderStatus = "Неизвестно";
+                break;
+        }
+        Console.WriteLine($"Номер заказа {id}: статус заказа {currentOrderStatus}");
+    }
 
 class Source
 {
