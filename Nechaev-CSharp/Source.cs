@@ -1,47 +1,42 @@
 ﻿using System;
 using System.Diagnostics;
  
-class Student
+class Animal
 {
     public string Name { get; set; }
-    public int Id { get; set; }
-    public uint Score { get; set; }
-    public Student(string name, int id, uint score)
+    public string Color { get; set; }
+    public uint Legs { get; set; }
+    public Animal(string name, string color, uint legs)
     {
         Name = name;
-        Id = id;
-        Score = score;
+        Color = color;
+        Legs = legs;
     }
 }
-
-class StudentPerformance
+class AnimalPerformance
 {
     public string Name { get; set; }
-    public uint Score { get; set; }
-    public StudentPerformance(string name, uint score)
+    public uint Legs { get; set; }
+    public AnimalPerformance(string name, uint legs)
     {
         Name = name;
-        Score = score;
+        Legs = legs;
     }
 }
-
 class Source
 {
     string whoIsMe = "я редиска";
     static void Main(string[] args)
     {
-        List<Student> students = new List<Student>(new[] { new Student ( "Давид", 0, 2 ), new Student ( "Лев", 1, 1 ), new Student ("Рия", 2, 5), new Student ("Андрей", 3, 3), new Student ( "Максим", 4, 5 ), new Student ( "Алексей", 5, 5 ), new Student ( "Тимур", 6, 0 ), new Student ( "Дмитрий", 7, 3 ), new Student ( "Ираклий", 8, 3 ), new Student ( "Расул", 9, 4 ), new Student ( "Тимур Тимурович", 10, 2 ), new Student ( "Филипп", 11, 2 ) });
+        List<Animal> animals = new List<Animal>(new[] { new Animal("cat", "brown", 4), new Animal("dog", "white", 4), new Animal("racoon", "gray", 4), new Animal("kangoroo", "orange", 2), new Animal("human", "normal", 2), });
+        var animalPerformance = from animal in animals select new AnimalPerformance(animal.Name, animal.Legs);
 
-        var names = from student in students select student.Name;
-        foreach (string item in names)
+        Queue<AnimalPerformance> twoLegsAnimal = new Queue<AnimalPerformance>();
+        Queue<AnimalPerformance> fourLegsAnimal = new Queue<AnimalPerformance>();
+        foreach (var animal in animalPerformance)
         {
-            Console.WriteLine(item);
-        }
-
-        var sudentPerformances = from student in students select new StudentPerformance(student.Name, student.Score);
-        foreach (var item in sudentPerformances)
-        {
-            Console.WriteLine($"Студент {item.Name} с оценкой {item.Score}");
+            if (animal.Legs == 2) twoLegsAnimal.Enqueue(animal);
+            else if (animal.Legs == 4) fourLegsAnimal.Enqueue(animal);
         }
     }
 }
