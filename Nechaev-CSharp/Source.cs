@@ -1,37 +1,47 @@
 ﻿using System;
 using System.Diagnostics;
  
+class Student
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public uint Score { get; set; }
+    public Student(string name, int id, uint score)
+    {
+        Name = name;
+        Id = id;
+        Score = score;
+    }
+}
+
+class StudentPerformance
+{
+    public string Name { get; set; }
+    public uint Score { get; set; }
+    public StudentPerformance(string name, uint score)
+    {
+        Name = name;
+        Score = score;
+    }
+}
+
 class Source
 {
     string whoIsMe = "я редиска";
     static void Main(string[] args)
     {
-        Queue<string> nameQueue = new Queue<string>(new[] { "Давид", "Лев", "Рия", "Тимур", "Филипп", "Расул", "Андрей", "Тимур Тимурович" });
-        nameQueue.Enqueue("Родин");
-        nameQueue.Dequeue(); // Давид убрался
+        List<Student> students = new List<Student>(new[] { new Student ( "Давид", 0, 2 ), new Student ( "Лев", 1, 1 ), new Student ("Рия", 2, 5), new Student ("Андрей", 3, 3), new Student ( "Максим", 4, 5 ), new Student ( "Алексей", 5, 5 ), new Student ( "Тимур", 6, 0 ), new Student ( "Дмитрий", 7, 3 ), new Student ( "Ираклий", 8, 3 ), new Student ( "Расул", 9, 4 ), new Student ( "Тимур Тимурович", 10, 2 ), new Student ( "Филипп", 11, 2 ) });
 
-        Stack<string> nameStack = new Stack<string>(new[] { "Давид", "Лев", "Рия", "Тимур", "Филипп", "Расул", "Андрей", "Тимур Тимурович" });
-        nameStack.Push("Родин");
-        string poppedItem = nameStack.Pop();
-        Console.WriteLine(poppedItem); // Родин
-        string tryPoppedItem = "";
-        if (nameStack.TryPop(out tryPoppedItem)) Console.WriteLine("Элемент успешно изъятирован.");
-        else Console.WriteLine("Провал изъятирования.");
-
-        Dictionary<string, uint> studentsDict = new Dictionary<string, uint>();
-        studentsDict.Add("Давид", 2);
-        studentsDict.Add("Рия", 5);
-        studentsDict.Add("Лев", 2);
-        studentsDict.Add("Тимур", 16);
-        studentsDict.Add("Филипп", 21);
-        studentsDict.Add("Расул", 7);
-        studentsDict.Add("Андрей", 0);
-        studentsDict.Add("Тимур Тимурович", 67);
-        studentsDict["Родин"] = 666;
-
-        foreach (KeyValuePair<string, uint> item in studentsDict)
+        var names = from student in students select student.Name;
+        foreach (string item in names)
         {
-            Console.WriteLine($"Студент {item.Key} с оценкой {item.Value}");
+            Console.WriteLine(item);
+        }
+
+        var sudentPerformances = from student in students select new StudentPerformance(student.Name, student.Score);
+        foreach (var item in sudentPerformances)
+        {
+            Console.WriteLine($"Студент {item.Name} с оценкой {item.Score}");
         }
     }
 }
