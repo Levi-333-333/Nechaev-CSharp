@@ -1,42 +1,45 @@
 ﻿using System;
 using System.Diagnostics;
  
-class Animal
+class Pixel
 {
-    public string Name { get; set; }
-    public string Color { get; set; }
-    public uint Legs { get; set; }
-    public Animal(string name, string color, uint legs)
+    private uint r, g, b, a;
+    public Pixel(uint r, uint g, uint b, uint a)
     {
-        Name = name;
-        Color = color;
-        Legs = legs;
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
     }
-}
-class AnimalPerformance
-{
-    public string Name { get; set; }
-    public uint Legs { get; set; }
-    public AnimalPerformance(string name, uint legs)
+    public override string ToString()
     {
-        Name = name;
-        Legs = legs;
+        return $"{r}, {g}, {b}, {a}";
     }
 }
 class Source
 {
     string whoIsMe = "я редиска";
+    static void PixelWork(Pixel pixel)
+    {
+        Console.WriteLine($"Пиксель {pixel} работает...");
+        Thread.Sleep( 1000 );
+        Console.WriteLine("Пиксель отработал своё.");
+    }
     static void Main(string[] args)
     {
-        List<Animal> animals = new List<Animal>(new[] { new Animal("cat", "brown", 4), new Animal("dog", "white", 4), new Animal("racoon", "gray", 4), new Animal("kangoroo", "orange", 2), new Animal("human", "normal", 2), });
-        var animalPerformance = from animal in animals select new AnimalPerformance(animal.Name, animal.Legs);
-
-        Queue<AnimalPerformance> twoLegsAnimal = new Queue<AnimalPerformance>();
-        Queue<AnimalPerformance> fourLegsAnimal = new Queue<AnimalPerformance>();
-        foreach (var animal in animalPerformance)
+        List<Pixel> pixels = new List<Pixel>(new[] { new Pixel(255, 255, 255, 255), new Pixel(134, 246, 54, 155), new Pixel(33, 65, 32, 1) });
+        pixels.AddRange(new[] { new Pixel(153, 64, 2, 6), new Pixel(23, 4, 56, 2), new Pixel(46, 35, 76, 255) });
+        foreach (Pixel pixel in pixels)
         {
-            if (animal.Legs == 2) twoLegsAnimal.Enqueue(animal);
-            else if (animal.Legs == 4) fourLegsAnimal.Enqueue(animal);
+            Console.WriteLine(pixel);
+        }
+        
+        LinkedList<Pixel> list = new LinkedList<Pixel>(pixels);
+        list.AddFirst(new Pixel(34, 34, 34, 34));
+        for (var i = list.First; pixels != null;)
+        {
+            PixelWork(list.First.Value);
+            list.RemoveFirst();
         }
     }
 }
