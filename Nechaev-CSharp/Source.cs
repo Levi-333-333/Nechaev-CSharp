@@ -1,45 +1,37 @@
 ﻿using System;
 using System.Diagnostics;
+using Libruary_namespace;
+using Books_namespace;
  
-class Pixel
+namespace Nechaev_CSharp
 {
-    private uint r, g, b, a;
-    public Pixel(uint r, uint g, uint b, uint a)
+    class Source
     {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
-    }
-    public override string ToString()
-    {
-        return $"{r}, {g}, {b}, {a}";
-    }
-}
-class Source
-{
-    string whoIsMe = "я редиска";
-    static void PixelWork(Pixel pixel)
-    {
-        Console.WriteLine($"Пиксель {pixel} работает...");
-        Thread.Sleep( 1000 );
-        Console.WriteLine("Пиксель отработал своё.");
-    }
-    static void Main(string[] args)
-    {
-        List<Pixel> pixels = new List<Pixel>(new[] { new Pixel(255, 255, 255, 255), new Pixel(134, 246, 54, 155), new Pixel(33, 65, 32, 1) });
-        pixels.AddRange(new[] { new Pixel(153, 64, 2, 6), new Pixel(23, 4, 56, 2), new Pixel(46, 35, 76, 255) });
-        foreach (Pixel pixel in pixels)
+        string whoIsMe = "я редиска";
+        static void ShowMessage(string message) => Console.WriteLine(message);
+
+        static void Main(string[] args)
         {
-            Console.WriteLine(pixel);
-        }
-        
-        LinkedList<Pixel> list = new LinkedList<Pixel>(pixels);
-        list.AddFirst(new Pixel(34, 34, 34, 34));
-        for (var i = list.First; pixels != null;)
-        {
-            PixelWork(list.First.Value);
-            list.RemoveFirst();
+            try
+            {
+                Libruary libruary = new Libruary(new List<Books>());
+                libruary.BookAdded += ShowMessage;
+                libruary.AddBook(new Book("фывфыв", "авав", 2026, "Философия", 132, true));
+                libruary.AddBook(new Book("фывфыв2", "авав", 2026, "Философия", 184, false));
+                libruary.AddBook(new Book("Исскоство языка Си", "Сунь Дзы", 4, "Техническая", 1268, false));
+                libruary.AddBook(new Book("Отруби", "Валентин Касевьев Омарович", 2000, "Фантастика", 23, true));
+
+                Console.WriteLine("\nПоиск по названию");
+                foreach (Books book in libruary.SearchBookName("фывфыв")) book.PrintInfo();
+                Console.WriteLine("\nПоиск по автору");
+                foreach (Books book in libruary.SearchBookAuthor("авав")) book.PrintInfo();
+                Console.WriteLine("\nОшибка в имени автора");
+                foreach (Books book in libruary.SearchBookAuthor("Сунь си")) book.PrintInfo();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
